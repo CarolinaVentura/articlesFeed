@@ -19,6 +19,7 @@ class ArticleTableSeeder extends Seeder
             'autor_id'=>1,
             'categoria_id'=>6
            
+           
         ]);
 
         \App\Article::create([

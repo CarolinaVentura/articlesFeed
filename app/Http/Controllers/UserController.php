@@ -42,7 +42,14 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         //
-        $data=$request->only('name', 'email','password');
+        $data=$request->only('name', 'email','password', 'profile_image');
+        if(!$request->file(['profile_image'])){
+            $data['profile_image']='userImages/default.png';
+        } else {
+            $path = $request->file('profile_image')->store('userImages', 'public');
+            $data['profile_image'] = $path;
+        }
+        
         $data['password']=bcrypt($data['password']);
         $user=\App\User::create($data);
        
@@ -85,7 +92,9 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $data= $request -> only(['name','email','password']);
+        $data= $request -> only(['name','email','password', 'profile_image']);
+        $path = $request->file('profile_image')->store('userImages', 'public');
+        $data['profile_image'] = $path;
        
        //verificar se o campo titulo,data e descricao foram preenchidos
        if($request->only(['name'])){
@@ -98,6 +107,10 @@ class UserController extends Controller
 
         if($request->only(['password'])){
             $user->password=bcrypt($data['password']);
+        }
+
+        if($request->file(['profile__image'])){
+            $user->profile_image=$data['profile_image']; 
         }
 
         $user->save();

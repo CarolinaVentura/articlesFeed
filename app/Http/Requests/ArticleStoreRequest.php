@@ -30,7 +30,8 @@ class ArticleStoreRequest extends FormRequest
             'data'=>'nullable|string', 
             'descricao'=>'required|max:100',
             'autor_id'=>'required|integer',
-            //'categoria_id'=>'required|integer'
+            'categoria_id'=>'required|integer',
+            'artigo_img' => 'nullable|image'
         ];
     }
 
@@ -42,8 +43,8 @@ class ArticleStoreRequest extends FormRequest
             'descricao.max'=>'Descrição no máximo pode ter 100 carateres.',
             'descricao.required'=>'Descrição obrigatória.',
             'autor_id.required'=>'O artigo tem de obrigatoriamente estar associado a um autor',
-            //'categoria_id.required'=>'O artigo tem de obrigatoriamente estar associado a uma categoria'
-            
+            'categoria_id.required'=>'O artigo tem de obrigatoriamente estar associado a uma categoria',
+            'artigo_img.image' => 'o ficheiro tem de ser do tipo imagem'
 
         ]; 
     }

@@ -40,7 +40,15 @@ class ArticleController extends Controller
     public function store(ArticleStoreRequest $request)
     {
         //
-        $data=$request->only(['titulo', 'data','descricao','autor_id']);
+        $data=$request->only(['titulo', 'data','descricao','autor_id', 'artigo_img', 'categoria_id']);
+
+        if(!$path = $request->file('artigo_img')){
+            $data['artigo_img'] = 'articleImages/predefinido.png';
+        }else{
+            $path = $request->file('artigo_img')->store('articleImages', 'public');
+            $data['artigo_img'] = $path;
+        }
+
         $article=\App\Article::create($data);
         
         return response ([
@@ -81,7 +89,11 @@ class ArticleController extends Controller
      */
     public function update(ArticleUpdateRequest $request, Article $article)
     {
-       $data= $request -> only(['titulo','data','descricao','autor_id']);
+       $data= $request -> only(['titulo','data','descricao','autor_id', 'artigo_img', 'categoria_id']);
+
+       $path = $request->file('artigo_img')->store('articleImages', 'public');
+        
+       $data['artigo_img'] = $path;
        
        //verificar se o campo titulo,data e descricao foram preenchidos
        if($request->only(['titulo'])){
@@ -98,6 +110,10 @@ class ArticleController extends Controller
 
         if($request->only(['autor_id'])){
             $article->autor_id=$data['autor_id'];
+        }
+
+        if($request->file(['artigo_img'])){
+            $article->artigo_img=$data['artigo_img'];
         }
 
        

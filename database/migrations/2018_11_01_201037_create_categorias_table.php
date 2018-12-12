@@ -26,6 +26,7 @@ class CreateCategoriasTable extends Migration
             $table->string('titulo');
             $table->string('data');
             $table->string('descricao');
+            $table->string('artigo_img')->default('articleImages/predefinido.png');
 
             $table->foreign('autor_id')->references('id')->on('users')->onDelete('cascade'); 
             $table->integer('autor_id')->unsigned(); 

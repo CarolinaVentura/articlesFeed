@@ -11,7 +11,7 @@ class Article extends Model
     use SoftDeletes; 
 
     protected $fillable = [
-            'titulo', 'data', 'descricao', 'autor_id', 'categoria_id'
+            'titulo', 'data', 'descricao', 'autor_id', 'categoria_id', 'artigo_img'
     ]; 
 
     public function autor(){
